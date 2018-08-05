@@ -1,7 +1,4 @@
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
+## Advanced Lane Finding
 ---
 
 **Advanced Lane Finding Project**
@@ -89,7 +86,7 @@ I implemented this step in lines 275 through 292 in my code in `pipeline.py` in 
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [https://github.com/Hailey0528/CarND-Advanced-Lane-Finding/blob/master/Lane_finding.mp4](./Lane_finding.mp4)
 
 ---
 
