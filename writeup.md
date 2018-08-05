@@ -10,12 +10,12 @@ The aim of this project is detecting lane boundary, determining the curvature of
 [//]: # (Image References)
 
 [image1]: ./output_images/undistortion_chessboard.jpg "undistort_chessboard"
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
+[image2]: ./output_images/undistortion_testImage.jpg "undistortion_testImage"
+[image3]: ./output_images/image_binary.jpg "image_binary"
+[image4]: ./output_images/warped.jpg "warped"
+[image5]: ./output_images/Finding_Lane_Pixels.jpg "Finding_Lane_Pixels"
+[image6]: ./output_images/result.jpg "result"
+[video1]: ./Lane_Finding.mp4 "Video"
 
 
 ### Camera Calibration
