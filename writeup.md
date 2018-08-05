@@ -97,12 +97,15 @@ Then I created one class, which names fit_polynomial to fit a second order polyn
 
 Next the radius of the curvature of the lane is calculated, which is in the class measure_curvature. The code for this step is contained in lines 237 through 246 of the file called 'pipeline.py'. With all the x and y positions in meter a second polynomial is obtained. The parameter of transformation from pixel position to real position in meter are xm_per_pix = 3.7/700, ym_per_pix = 30/720, which are from Udacity Course. Then I need to calculate the current curvature, which means when the y position is  the maximal value within all the y postions.
 
-Curvature is calculated with 
+Curvature is calculated with:
+
 ![first equation](https://latex.codecogs.com/gif.latex?R_%7Bcurve%7D%20%3D%20%5Cfrac%7B%281&plus;%28%5Cfrac%7B%5Cpartial%20x%20%7D%7B%5Cpartial%20y%7D%29%5E%7B2%7D%29%29%5E%7B%5Cfrac%7B3%7D%7B2%7D%7D%7D%7B%5Cleft%20%7C%20%5Cfrac%7B%5Cpartial%5E2%20x%7D%7B%5Cpartial%20y%5E2%7D%5Cright%20%7C%7D)
+
+Then I calculated the curvature with the average of the left and right curvature.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+I implemented this step in lines 275 through 292 in my code in `pipeline.py` in the function process_image.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
