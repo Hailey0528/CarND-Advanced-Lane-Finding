@@ -73,6 +73,7 @@ Curvature is calculated with:
 ![first equation](https://latex.codecogs.com/gif.latex?R_%7Bcurve%7D%20%3D%20%5Cfrac%7B%281&plus;%28%5Cfrac%7B%5Cpartial%20x%20%7D%7B%5Cpartial%20y%7D%29%5E%7B2%7D%29%29%5E%7B%5Cfrac%7B3%7D%7B2%7D%7D%7D%7B%5Cleft%20%7C%20%5Cfrac%7B%5Cpartial%5E2%20x%7D%7B%5Cpartial%20y%5E2%7D%5Cright%20%7C%7D)
 
 Then I calculated the curvature with the average of the left and right curvature.
+The offset of the vehicle is calculated based on that the vehicle should be in the center of the image. The current postion is the middle of the left and right lane. The soll-position is the middle of the image. Therefore, the offset is current position minus soll-position.
 
 #### Plot Back Down
 
@@ -84,14 +85,12 @@ I implemented this step in lines 275 through 292 in my code in `pipeline.py` in 
 
 ### Pipeline (video)
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### Here is the link of the video, in which the lane boundary, the curvature of the lane and the vehicle position with respect to center are shown.
 
-Here's a [https://github.com/Hailey0528/CarND-Advanced-Lane-Finding/blob/master/Lane_finding.mp4](./Lane_finding.mp4)
+ [https://github.com/Hailey0528/CarND-Advanced-Lane-Finding/blob/master/Lane_finding.mp4](./Lane_finding.mp4)
 
 ---
 
 ### Discussion
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+#### 
