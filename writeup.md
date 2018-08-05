@@ -9,7 +9,7 @@ The aim of this project is detecting lane boundary, determining the curvature of
 
 [//]: # (Image References)
 
-[image1]: ./output_images/undistortion_chessboard.ipg "undistort_chessboard"
+[image1]: ./output_images/undistortion_chessboard.jpg "undistort_chessboard"
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
