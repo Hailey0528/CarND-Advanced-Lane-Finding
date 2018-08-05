@@ -5,17 +5,7 @@
 ---
 
 **Advanced Lane Finding Project**
-
-The goals / steps of this project are the following:
-
-* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
-* Apply a distortion correction to raw images.
-* Use color transforms, gradients, etc., to create a thresholded binary image.
-* Apply a perspective transform to rectify binary image ("birds-eye view").
-* Detect lane pixels and fit to find the lane boundary.
-* Determine the curvature of the lane and vehicle position with respect to center.
-* Warp the detected lane boundaries back onto the original image.
-* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+The aim of this project is detecting lane boundary, determining the curvature of the lane and the vehicle position with respect to center. camera calibration is done at first. Color transform and gradients are used to create a thresholded binary image. Then the a perspective transform is deployed to retify binary image. From the binary image the lane pixels are detected and a second order polynomial is obtained from the detected lane pixels. After that the lane boundary has been warped back onto the original image.
 
 [//]: # (Image References)
 
@@ -27,49 +17,33 @@ The goals / steps of this project are the following:
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
-
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 
 ### Camera Calibration
 
-#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection. The code for this step is contained in lines 12 through 37 of the file called `pipeline.py`).  
 
-The code for this step is contained in the first code cell of the IPython notebook located in "./examples/example.ipynb" (or in lines # through # of the file called `some_file.py`).  
-
-I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
-
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients, which is implemented in line 42 of the file called 'pipeline.py'  I applied this distortion correction to one calibration image, which is implemented in line 47 of the file called 'pipeline.py'. I obtained this result: 
 
 ![alt text][image1]
 
 ### Pipeline (single images)
 
-#### 1. Provide an example of a distortion-corrected image.
+#### 1. Distortion Correction
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
+After applying the distortion correction from camera calibration to one test image, the result is this one:
 ![alt text][image2]
 
-#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+#### 2. Threshlding
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines 58 through 82 in `pipeline.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines 57 through 81 in function called `threshold()` in `pipeline.py`).  Here's an example of my output for this step.  
 
 ![alt text][image3]
 
-#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+#### 3. Perspective Transform
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+The code for my perspective transform includes a function called `unwarper()`, which appears in lines 83 through 93 in the file `pipeline.py`. The `unwarper()` function takes as inputs an binary image (`img_binary`), as well as source (`src`) and destination (`dst`) points. 
 
-
-The source and destination points are:
+The source and destination points, which I have chosen are:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
@@ -82,7 +56,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 ![alt text][image4]
 
-#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 4. Finding Lane Lane
 Then I created the class which names in find_lane_pixels to identify lane-line pixels.The code for this step is contained in in lines 97 through 177 of the file called `pipeline.py`. 
 
 Because the lane lines are in the bottom half ot the image, I take a histogram of the bottom half of the image in the vertical direction. Then the peaks of the left and right halves of the histogram are identified. After that, I chose the number of the sliding windows, the width of the windows, the height of the windows.
@@ -93,7 +67,7 @@ Then I created one class, which names fit_polynomial to fit a second order polyn
 
 ![alt text][image5]
 
-#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+#### Radius of Curvature and Offset of Vehicle
 
 Next the radius of the curvature of the lane is calculated, which is in the class measure_curvature. The code for this step is contained in lines 237 through 246 of the file called 'pipeline.py'. With all the x and y positions in meter a second polynomial is obtained. The parameter of transformation from pixel position to real position in meter are xm_per_pix = 3.7/700, ym_per_pix = 30/720, which are from Udacity Course. Then I need to calculate the current curvature, which means when the y position is  the maximal value within all the y postions.
 
@@ -103,7 +77,7 @@ Curvature is calculated with:
 
 Then I calculated the curvature with the average of the left and right curvature.
 
-#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+#### Plot Back Down
 
 I implemented this step in lines 275 through 292 in my code in `pipeline.py` in the function process_image.  Here is an example of my result on a test image:
 
