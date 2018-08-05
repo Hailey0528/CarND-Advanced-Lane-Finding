@@ -83,9 +83,12 @@ I verified that my perspective transform was working as expected by drawing the 
 ![alt text][image4]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
-Then I created the class which names in find_lane_pixels to identify lane-line pixels.The code for this step is contained in in lines 97 through 177 of the file called `pipeline.py`.
+Then I created the class which names in find_lane_pixels to identify lane-line pixels.The code for this step is contained in in lines 97 through 177 of the file called `pipeline.py`. 
+
 Because the lane lines are in the bottom half ot the image, I take a histogram of the bottom half of the image in the vertical direction. Then the peaks of the left and right halves of the histogram are identified. After that, I chose the number of the sliding windows, the width of the windows, the height of the windows.
+
 After thees preparations, in each window, the window boundaries in y direction, in x direction for left and right lane, will be calculated. Then check the nonzero pixels in x and y direction within the windows. The indices of the pixels should be saved. If the number of the pixels is above the the chosen minimum number of pixels, then recenter next window to their mean position. After I found all the pixels which fulfilled the all the requirements, I obtained the pixel positions of left and right lane line.
+
 Then I created one class, which names fit_polynomial to fit a second order polynomial to fit the two lane lines. The code for this step is contained in lines 217 through 235 of the file called 'pipeline.py'. Using np.polyfit a second order polynomial is obtained with the pixel positions from last step. In this class, I also generated all the y values, which means in the whole y direction. Then the values in x direction are also generated based on the fitted second order polynomial and the generated y values.
 
 ![alt text][image5]
@@ -93,7 +96,9 @@ Then I created one class, which names fit_polynomial to fit a second order polyn
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 Next the radius of the curvature of the lane is calculated, which is in the class measure_curvature. The code for this step is contained in lines 237 through 246 of the file called 'pipeline.py'. With all the x and y positions in meter a second polynomial is obtained. The parameter of transformation from pixel position to real position in meter are xm_per_pix = 3.7/700, ym_per_pix = 30/720, which are from Udacity Course. Then I need to calculate the current curvature, which means when the y position is  the maximal value within all the y postions.
+
 Curvature is calculated with 
+R_{curve} = \frac{(1+(\frac{\partial x }{\partial y})^{2}))^{\frac{3}{2}}}{\left |  \frac{\partial^2 x}{\partial y^2}\right |}
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
