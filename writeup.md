@@ -68,41 +68,32 @@ I used a combination of color and gradient thresholds to generate a binary image
 
 The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
-```python
-src = np.float32(
-    [[580, 450], 
-    [180, 700], 
-    [1200, 700], 
-    [700, 450]])
-dst = np.float32(
-    [[100, 0], 
-    [100, 700], 
-    [1200, 700], 
-    [1200, 0]])
-```
 
-This resulted in the following source and destination points:
+The source and destination points are:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 580, 450      | 100, 0        | 
+| 180, 700      | 100, 700      |
+| 1200, 700     | 1200, 700      |
+| 700, 450      | 1200, 0        |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
 ![alt text][image4]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
-
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+Then I created the class which names in find_lane_pixels to identify lane-line pixels.The code for this step is contained in in lines 97 through 177 of the file called `pipeline.py`.
+Because the lane lines are in the bottom half ot the image, I take a histogram of the bottom half of the image in the vertical direction. Then the peaks of the left and right halves of the histogram are identified. After that, I chose the number of the sliding windows, the width of the windows, the height of the windows.
+After thees preparations, in each window, the window boundaries in y direction, in x direction for left and right lane, will be calculated. Then check the nonzero pixels in x and y direction within the windows. The indices of the pixels should be saved. If the number of the pixels is above the the chosen minimum number of pixels, then recenter next window to their mean position. After I found all the pixels which fulfilled the all the requirements, I obtained the pixel positions of left and right lane line.
+Then I created one class, which names fit_polynomial to fit a second order polynomial to fit the two lane lines. The code for this step is contained in lines 217 through 235 of the file called 'pipeline.py'. Using np.polyfit a second order polynomial is obtained with the pixel positions from last step. In this class, I also generated all the y values, which means in the whole y direction. Then the values in x direction are also generated based on the fitted second order polynomial and the generated y values.
 
 ![alt text][image5]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+Next the radius of the curvature of the lane is calculated, which is in the class measure_curvature. The code for this step is contained in lines 237 through 246 of the file called 'pipeline.py'. With all the x and y positions in meter a second polynomial is obtained. The parameter of transformation from pixel position to real position in meter are xm_per_pix = 3.7/700, ym_per_pix = 30/720, which are from Udacity Course. Then I need to calculate the current curvature, which means when the y position is  the maximal value within all the y postions.
+Curvature is calculated with 
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
