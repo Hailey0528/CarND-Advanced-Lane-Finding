@@ -27,7 +27,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 #### 1. Distortion Correction
 
-After applying the distortion correction from camera calibration to one test image, the result is this one:
+After applying the distortion correction from camera calibration to one test image,which is implemented in line 55 of the file called 'pipeline.py'. The result is this one:
 ![alt text][image2]
 
 #### 2. Threshlding
@@ -60,13 +60,13 @@ Because the lane lines are in the bottom half ot the image, I take a histogram o
 
 After thees preparations, in each window, the window boundaries in y direction, in x direction for left and right lane, will be calculated. Then check the nonzero pixels in x and y direction within the windows. The indices of the pixels should be saved. If the number of the pixels is above the the chosen minimum number of pixels, then recenter next window to their mean position. After I found all the pixels which fulfilled the all the requirements, I obtained the pixel positions of left and right lane line.
 
-Then I created one class, which names fit_polynomial to fit a second order polynomial to fit the two lane lines. The code for this step is contained in lines 217 through 235 of the file called 'pipeline.py'. Using np.polyfit a second order polynomial is obtained with the pixel positions from last step. In this class, I also generated all the y values, which means in the whole y direction. Then the values in x direction are also generated based on the fitted second order polynomial and the generated y values.
+Then I created one class, which names fit_polynomial to fit a second order polynomial to fit the two lane lines. The code for this step is contained in lines 178 through 195 of the file called 'pipeline.py'. Using np.polyfit a second order polynomial is obtained with the pixel positions from last step. In this class, I also generated all the y values, which means in the whole y direction. Then the values in x direction are also generated based on the fitted second order polynomial and the generated y values.
 
 ![alt text][image5]
 
 #### Radius of Curvature and Offset of Vehicle
 
-Next the radius of the curvature of the lane is calculated, which is in the class measure_curvature. The code for this step is contained in lines 237 through 246 of the file called 'pipeline.py'. With all the x and y positions in meter a second polynomial is obtained. The parameter of transformation from pixel position to real position in meter are xm_per_pix = 3.7/700, ym_per_pix = 30/720, which are from Udacity Course. Then I need to calculate the current curvature, which means when the y position is  the maximal value within all the y postions.
+Next the radius of the curvature of the lane is calculated, which is in the class measure_curvature. The code for this step is contained in lines 197 through 206 of the file called 'pipeline.py'. With all the x and y positions in meter a second polynomial is obtained. The parameter of transformation from pixel position to real position in meter are xm_per_pix = 3.7/700, ym_per_pix = 30/720, which are from Udacity Course. Then I need to calculate the current curvature, which means when the y position is  the maximal value within all the y postions.
 
 Curvature is calculated with:
 
@@ -77,7 +77,7 @@ The offset of the vehicle is calculated based on that the vehicle should be in t
 
 #### Plot Back Down
 
-I implemented this step in lines 275 through 292 in my code in `pipeline.py` in the function process_image.  Here is an example of my result on a test image:
+I implemented this step in lines 232 through 251 in my code in `pipeline.py` in the function process_image.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
@@ -93,4 +93,4 @@ I implemented this step in lines 275 through 292 in my code in `pipeline.py` in 
 
 ### Discussion
 
-#### gd
+#### In this project, I used camera calibration, distortion correction of the image to process the image. Color threshold and gradient threshold are deployed to generate the binary image. Then the bird view image is obtained with warpPerspective function. After that, the pixels are found in the lanes, and a second order polynomial is obtained to fit these pixels. 
