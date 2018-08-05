@@ -18,7 +18,6 @@ The aim of this project is detecting lane boundary, determining the curvature of
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection. The code for this step is contained in lines 12 through 37 of the file called `pipeline.py`).  
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients, which is implemented in line 42 of the file called 'pipeline.py'  I applied this distortion correction to one calibration image, which is implemented in line 47 of the file called 'pipeline.py'. I obtained this result: 
-
 ![alt text][image1]
 
 ### Pipeline (single images)
@@ -31,7 +30,6 @@ After applying the distortion correction from camera calibration to one test ima
 #### 2. Threshlding
 
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines 57 through 81 in function called `threshold()` in `pipeline.py`).  Here's an example of my output for this step.  
-
 ![alt text][image3]
 
 #### 3. Perspective Transform
@@ -48,7 +46,6 @@ The source and destination points, which I have chosen are:
 | 700, 450      | 1200, 0        |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
-
 ![alt text][image4]
 
 #### 4. Finding Lane Lane
@@ -59,7 +56,6 @@ Because the lane lines are in the bottom half ot the image, I take a histogram o
 After thees preparations, in each window, the window boundaries in y direction, in x direction for left and right lane, will be calculated. Then check the nonzero pixels in x and y direction within the windows. The indices of the pixels should be saved. If the number of the pixels is above the the chosen minimum number of pixels, then recenter next window to their mean position. After I found all the pixels which fulfilled the all the requirements, I obtained the pixel positions of left and right lane line.
 
 Then I created one class, which names fit_polynomial to fit a second order polynomial to fit the two lane lines. The code for this step is contained in lines 178 through 195 of the file called 'pipeline.py'. Using np.polyfit a second order polynomial is obtained with the pixel positions from last step. In this class, I also generated all the y values, which means in the whole y direction. Then the values in x direction are also generated based on the fitted second order polynomial and the generated y values.
-
 ![alt text][image5]
 
 #### Radius of Curvature and Offset of Vehicle
@@ -76,7 +72,6 @@ The offset of the vehicle is calculated based on that the vehicle should be in t
 #### Plot Back Down
 
 I implemented this step in lines 232 through 251 in my code in `pipeline.py` in the function process_image.  Here is an example of my result on a test image:
-
 ![alt text][image6]
 
 ---
