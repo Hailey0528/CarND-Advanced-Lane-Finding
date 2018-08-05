@@ -1,7 +1,5 @@
 ## Advanced Lane Finding
 ---
-
-**Advanced Lane Finding Project**
 The aim of this project is detecting lane boundary, determining the curvature of the lane and the vehicle position with respect to center. camera calibration is done at first. Color transform and gradients are used to create a thresholded binary image. Then the a perspective transform is deployed to retify binary image. From the binary image the lane pixels are detected and a second order polynomial is obtained from the detected lane pixels. After that the lane boundary has been warped back onto the original image.
 
 [//]: # (Image References)
